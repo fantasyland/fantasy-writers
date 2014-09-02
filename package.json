@@ -1,0 +1,32 @@
+{
+  "name": "fantasy-writers",
+  "version": "0.0.1",
+  "description": "Reader control structure.",
+  "main": "writer.js",
+  "dependencies": {
+    "daggy": "0.0.1",
+    "fantasy-tuples": "0.0.1",
+    "pointfree-fantasy": "~0.1.1",
+    "fantasy-identities": "0.0.1"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.8.1"
+  },
+  "scripts": {
+    "test": "$(npm bin)/nodeunit test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fantasyland/fantasy-writers.git"
+  },
+  "keywords": [
+    "fantasyland",
+    "writer",
+    "monad"
+  ],
+  "author": "Trevor Basinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fantasyland/fantasy-writers/issues"
+  }
+}
