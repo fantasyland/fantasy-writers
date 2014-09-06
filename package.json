@@ -1,20 +1,6 @@
 {
   "name": "fantasy-writers",
-  "version": "0.0.1",
   "description": "Reader control structure.",
-  "main": "writer.js",
-  "dependencies": {
-    "daggy": "0.0.1",
-    "fantasy-tuples": "0.0.1",
-    "pointfree-fantasy": "~0.1.1",
-    "fantasy-identities": "0.0.1"
-  },
-  "devDependencies": {
-    "nodeunit": "~0.8.1"
-  },
-  "scripts": {
-    "test": "$(npm bin)/nodeunit test.js"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/fantasyland/fantasy-writers.git"
@@ -28,5 +14,30 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fantasyland/fantasy-writers/issues"
-  }
+  },
+  "dependencies": {
+    "daggy": "0.0.1",
+    "fantasy-tuples": "0.0.1",
+    "pointfree-fantasy": "~0.1.1",
+    "fantasy-identities": "0.0.1",
+    "fantasy-combinators": "0.0.1"
+  },
+  "devDependencies": {
+    "grunt-cli": "0.1.9",
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "grunt-contrib-nodeunit": "0.2.0",
+    "fantasy-check": "0.1.4",
+    "fantasy-helpers": "0.0.x",
+    "fantasy-identities": "git+https://github.com/fantasyland/fantasy-identities.git"
+  },
+  "scripts": {
+    "test": "$(npm bin)/nodeunit test.js"
+  },
+  "scripts": {
+      "test": "grunt"
+  },
+  "files": ["fantasy-writers.js", "src/*.js"],
+  "main": "fantasy-writers.js",
+  "version": "0.0.1"
 }

@@ -1,43 +1,39 @@
-var Tuple2 = require('fantasy-tuples').Tuple2;
+var daggy = require('daggy'),
+    combinators = require('fantasy-combinators'),
 
-var id = function (x) { return x; };
+    Tuple2 = require('fantasy-tuples').Tuple2,
+    identity = combinators.identity,
 
-var overrideMethod = function ( obj, method, func ) {
-  obj[method] = func;
-  return obj;
-}
-
-var Writer = function(x, y) {
-  this.run = function() {
-    return Tuple2(x, y || { concat: id });
-  };
-  return this;
-};
+    Writer = daggy.tagged('run');
 
 Writer.of = function(x) {
-    return new Writer(x, { concat: id } );
+  return Writer(function() {
+    return Tuple2(x, {concat: identity});
+  });
 };
 
 Writer.prototype.chain = function(f) {
   var self = this;
-  return overrideMethod(new Writer(), 'run', function() {
-    var result = self.run();
-    var t = f(result._1).run();
+  return Writer(function() {
+    var result = self.run(),
+        t = f(result._1).run();
     return Tuple2(t._1, result._2.concat(t._2));
   });
 };
 
 Writer.prototype.tell = function(y) {
   var self = this;
-  return overrideMethod(new Writer(), 'run', function () {
+  return Writer(function () {
     var result = self.run();
-    return new Tuple2(null, result._2.concat(y));
+    return Tuple2(null, result._2.concat(y));
   });
-}
+};
 
 Writer.prototype.map = function(f) {
   return this.chain(function(a) {
-    return new Writer(f(a), { concat: id });
+    return Writer(function() {
+      return Tuple2(f(a), { concat: identity });
+    });
   });
 };
 
@@ -85,7 +81,7 @@ Writer.WriterT = function(M) {
   };
 
   return WriterT;
-}
+};
 
-if(typeof module != 'undefined')
+if (typeof module != 'undefined')
   module.exports = Writer;

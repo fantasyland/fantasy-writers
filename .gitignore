@@ -1,2 +1,7 @@
+*.log
+.DS_Store
+bin
+coverage
+docs
 node_modules
-npm-debug.log
+tags
