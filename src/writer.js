@@ -43,45 +43,5 @@ Writer.prototype.ap = function(b) {
   });
 };
 
-Writer.WriterT = function(M) {
-
-  var WriterT = function(x, y) {
-    this.run = function() {
-      return Tuple2(x, y || { concat: id });
-    };
-  };
-
-  WriterT.of = function(x) {
-    return new WriterT(M.of(x), { concat: id });
-  };
-
-  WriterT.lift = function(m) {
-    return new WriterT(m, { concat: id } );
-  };
-
-  WriterT.prototype.chain = function(f) {
-    var self = this;
-    return overrideMethod(new WriterT(), 'run', function() {
-      var result = self.run();
-      var m = result._1.chain(f);
-      return Tuple2(m, result._2);
-    });
-  };
-
-  WriterT.prototype.map = function(f) {
-    return this.chain(function(a) {
-      return WriterT.of(a._1.map(f), { concat: id });
-    });
-  };
-
-  WriterT.prototype.ap = function(b) {
-    return this.chain(function(f) {
-      return b.map(f);
-    });
-  };
-
-  return WriterT;
-};
-
 if (typeof module != 'undefined')
   module.exports = Writer;
