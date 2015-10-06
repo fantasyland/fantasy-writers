@@ -30,10 +30,10 @@ Writer.prototype.tell = function(y) {
 };
 
 Writer.prototype.map = function(f) {
-  return this.chain(function(a) {
-    return Writer(function() {
-      return Tuple2(f(a), { concat: identity });
-    });
+  var self = this;
+  return Writer(function() {
+    var result = self.run();
+    return Tuple2(f(result._1), result._2);
   });
 };
 
