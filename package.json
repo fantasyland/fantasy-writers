@@ -17,16 +17,16 @@
   },
   "dependencies": {
     "daggy": "0.0.1",
-    "fantasy-tuples": "0.0.1",
+    "fantasy-tuples": "git+https://github.com/fantasyland/fantasy-tuples.git",
+    "fantasy-land": "git+https://github.com/fantasyland/fantasy-land.git",
     "pointfree-fantasy": "~0.1.1",
-    "fantasy-identities": "0.0.1",
-    "fantasy-combinators": "0.0.1"
+    "fantasy-combinators": "0.0.1",
+    "fantasy-identities": "git+https://github.com/fantasyland/fantasy-identities.git"
   },
   "devDependencies": {
     "nodeunit": "0.9.x",
     "fantasy-check": "0.1.4",
-    "fantasy-helpers": "0.0.x",
-    "fantasy-identities": "git+https://github.com/fantasyland/fantasy-identities.git"
+    "fantasy-helpers": "0.0.x"
   },
   "scripts": {
     "test": "node --harmony_destructuring node_modules/.bin/nodeunit test/*.js"
