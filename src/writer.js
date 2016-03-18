@@ -44,4 +44,35 @@ const Writer = M => {
 
 };
 
+// Transformer
+Writer.WriterT = (Monoid, Monad) => {
+
+    const WriterT = daggy.tagged("run");
+
+    const W = Writer(Monoid);
+
+    WriterT[of] = (x) => WriterT(() => Monad[of](W[of](x)));
+
+    WriterT.prototype[map] = function(f){
+      return this[chain]((a) => WriterT[of](f(a)));
+    }
+
+    WriterT.prototype[chain] = function(f){
+      return WriterT(() => this.run()[chain]((outerWriter) => {
+        const outerTuple = outerWriter.run();
+        const newMonadWrappedWriter = f(outerTuple._1).run();
+        return newMonadWrappedWriter[map]((writer) => {
+          const innerTuple = writer.run();
+          return W(() => Tuple2(innerTuple._1, outerTuple._2.concat(innerTuple._2)));
+        })
+      }))
+    }
+
+    WriterT.prototype[ap] = function(b){
+      return this.chain(a => b.map(a))
+    }
+
+    return WriterT;
+}
+
 module.exports = Writer;
