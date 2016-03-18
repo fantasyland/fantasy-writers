@@ -29,6 +29,8 @@ Seq.prototype.length = function() {
 
 const Writerʹ = Writer(Seq);
 
+const WriterTʹ = Writer.WriterT(Seq, Identity);
+
 exports.writer = {
 
     // Applicative Functor tests
@@ -65,3 +67,23 @@ exports.writer = {
         [λ.AnyVal, λ.AnyVal]
     )
 };
+
+exports.writerT = {
+    // Applicative Functor tests
+    'All (Applicative)': applicative.laws(λ)(WriterTʹ, run),
+    'Identity (Applicative)': applicative.identity(λ)(WriterTʹ, run),
+    'Composition (Applicative)': applicative.composition(λ)(WriterTʹ, run),
+    'Homomorphism (Applicative)': applicative.homomorphism(λ)(WriterTʹ, run),
+    'Interchange (Applicative)': applicative.interchange(λ)(WriterTʹ, run),
+
+    // Functor tests
+    'All (Functor)': functor.laws(λ)(WriterTʹ.of, run),
+    'Identity (Functor)': functor.identity(λ)(WriterTʹ.of, run),
+    'Composition (Functor)': functor.composition(λ)(WriterTʹ.of, run),
+
+    // Monad tests
+    'All (Monad)': monad.laws(λ)(WriterTʹ, run),
+    'Left Identity (Monad)': monad.leftIdentity(λ)(WriterTʹ, run),
+    'Right Identity (Monad)': monad.rightIdentity(λ)(WriterTʹ, run),
+    'Associativity (Monad)': monad.associativity(λ)(WriterTʹ, run),
+}
